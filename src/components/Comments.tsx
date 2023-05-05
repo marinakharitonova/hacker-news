@@ -2,7 +2,7 @@ import React from 'react';
 import {Space, Typography} from "antd";
 import CommentsList from "./CommentsList";
 
-const {Title} = Typography
+const {Title, Text} = Typography
 
 type CommentsPops = {
     commentsIds: number[]
@@ -23,7 +23,8 @@ function Comments({commentsIds, addCommentToRefetch}: CommentsPops) {
 
             {
                 commentsIds && commentsIds.length > 0
-                && <CommentsList commentsIds={commentsIds} addCommentToRefetch={addCommentToRefetch}/>
+                    ? <CommentsList commentsIds={commentsIds} addCommentToRefetch={addCommentToRefetch}/>
+                    : <Text>no comments yet</Text>
             }
 
         </>
