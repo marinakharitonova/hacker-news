@@ -21,5 +21,5 @@ export const mainApi = createApi({
 export const {
     useGetNewsIdsQuery,
     useGetNewByIdQuery,
-    useGetCommentByIdQuery
+    useGetCommentByIdQuery,
 } = mainApi

@@ -24,7 +24,7 @@ function CommentBody({comment, handleClick}: CommentBodyProps) {
 
     return (
         <List.Item onClick={handleClick} style={listStyle}>
-            {comment.kids && <DownOutlined style={iconStyle}/>}
+            {comment.kids && comment.kids.length > 0 && <DownOutlined style={iconStyle}/>}
 
             <List.Item.Meta
                 title={<div dangerouslySetInnerHTML={{__html: comment.text}} className={'commentText'}></div>}

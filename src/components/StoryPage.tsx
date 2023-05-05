@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useRef} from 'react';
 import {Button, Space, Typography} from "antd";
 import {useGetNewByIdQuery} from "../features/apiSlice";
 import {ArrowLeftOutlined, LinkOutlined, MessageOutlined} from "@ant-design/icons";
@@ -16,7 +16,25 @@ const {Title, Text} = Typography;
 function StoryPage() {
     let {storyId} = useParams();
 
-    const {data, isLoading, isSuccess, isFetching, isError, refetch } = useGetNewByIdQuery(Number(storyId))
+    const {data, isLoading, isSuccess, isError, refetch} = useGetNewByIdQuery(Number(storyId))
+
+    const commentsIdsToRefetch = useRef({} as { [key: number]: () => void })
+
+    const addCommentToRefetch = useCallback((commentId: number, fetcher: () => void) => {
+        if (!(commentId in commentsIdsToRefetch.current)) {
+            commentsIdsToRefetch.current[commentId] = fetcher
+        }
+    }, [])
+
+
+    const handleClick = async () => {
+        const result = await refetch().unwrap()
+        if (!result.kids || result.kids.length === 0) return
+
+        for (let id in commentsIdsToRefetch.current) {
+            commentsIdsToRefetch.current[id]()
+        }
+    }
 
     return (
         <Space direction={"vertical"} style={{display: 'flex', padding: '24px'}}>
@@ -40,7 +58,13 @@ function StoryPage() {
                                 className={classNames('link', 'buttonLink')}
                         >read more</Button>
                         <IconText icon={MessageOutlined} text={data.descendants.toString()}/>
-                        <Comments commentsIds={data.kids} handleClick={() => refetch()} isButtonDisabled={isFetching}/>
+
+                        <Button type="primary"
+                                onClick={handleClick}
+                                className={'button'}
+                                style={{display: 'block', marginLeft: 'auto'}}
+                        >Refresh comments</Button>
+                        <Comments commentsIds={data.kids} addCommentToRefetch={addCommentToRefetch}/>
 
                     </Space>}
                 </>
