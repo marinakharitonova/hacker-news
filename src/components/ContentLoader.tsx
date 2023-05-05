@@ -6,7 +6,6 @@ type ContentLoaderProps = {
     isLoading: boolean
     isSuccess: boolean
     isError: boolean
-    loader?: JSX.Element
 }
 
 /**
@@ -15,7 +14,7 @@ type ContentLoaderProps = {
  * the content on success,
  * an error on failure.
  */
-function ContentLoader({children, isLoading, isSuccess, loader, isError}: ContentLoaderProps) {
+function ContentLoader({children, isLoading, isSuccess, isError}: ContentLoaderProps) {
 
     return (
         <Skeleton active loading={isLoading}>
