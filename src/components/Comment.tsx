@@ -19,8 +19,10 @@ function Comment({commentId, addCommentToRefetch}: CommentProps) {
     const [hasKids, setHasKids] = useState(false)
 
     useEffect(() => {
-        addCommentToRefetch(commentId, refetch)
-    }, [])
+        if (isSuccess) {
+            addCommentToRefetch(commentId, refetch)
+        }
+    }, [addCommentToRefetch, commentId, refetch, isSuccess])
 
     const handleClick = () => {
         if (!comment?.kids) return
