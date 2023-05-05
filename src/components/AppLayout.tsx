@@ -1,11 +1,13 @@
 import React from 'react';
 import {Content, Footer, Header} from "antd/es/layout/layout";
-import Home from "./Home";
 import {GithubOutlined} from "@ant-design/icons";
 import {Button, Layout, Typography} from "antd";
+import {Outlet} from "react-router-dom";
 
 const {Text} = Typography;
-
+/**
+ * AppLayout renders the application layout: header, footer and content block.
+ */
 function AppLayout() {
     return (
         <Layout>
@@ -14,11 +16,13 @@ function AppLayout() {
                     <Text strong={true} style={{fontSize: '1.25em'}}>Hacker News</Text>
                 </Content>
             </Header>
-            <Content style={mainContentStyle}><Home/></Content>
+            <Content style={mainContentStyle}>
+                <Outlet />
+            </Content>
             <Footer style={headerStyle}>
                 <Content style={contentStyle}>
                     <Button type="link" href='https://github.com/marinakharitonova'
-                            style={footerLinkStyle} icon={<GithubOutlined/>}>marinakharitonova</Button>
+                            style={footerLinkStyle} icon={<GithubOutlined/>} className={'buttonLink'}>marinakharitonova</Button>
                 </Content>
             </Footer>
         </Layout>
@@ -36,16 +40,17 @@ const contentStyle: React.CSSProperties = {
     maxWidth: '1200px',
     margin: '0 auto',
     width: '100%',
+    padding: '16px 12px'
 }
 
 const mainContentStyle = {
     ...contentStyle,
-    padding: '36px 0',
-    minHeight: 'calc(100vh - 128px)'
+    margin: '36px auto',
+    minHeight: 'calc(100vh - 128px)',
+    background: '#fff',
+    borderRadius: '10px',
 }
 
 const footerLinkStyle: React.CSSProperties = {
     color: '#fff',
-    padding: 0,
-    height: 'auto',
 }

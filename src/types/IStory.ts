@@ -1,6 +1,7 @@
-export interface Story {
+export interface IStory {
     by: string
     descendants: number
+    dead?: boolean
     id: number
     kids: number[]
     score: number
